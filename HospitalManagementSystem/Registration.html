@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration Form</title>
+
+<script>
+      function myFunction() {
+            var name = document.getElementById("name").value;
+            console.log(name);
+            if (name.length === 0) {
+                  alert("name is null");
+            }
+
+            var age = document.getElementById("age").value;
+            console.log(age);
+            if (age.length===0){
+                  alert("Age is null");
+            }
+
+
+            var phone = document.getElementById("phone").value;
+            console.log(phone);
+            if (phone.length===0){
+                  alert("Phone is null");
+            }
+
+            var email = document.getElementById("email").value;
+            console.log(email);
+            if (email.length===0){
+                  alert("Email is null");
+            }
+
+            var pass = document.getElementById("password").value;
+            console.log(pass);
+            if (pass.length===0){
+                  alert("Password is null");
+            }
+
+            var cpass = document.getElementById("password").value;
+            console.log(cpass);
+            if (cpass.length===0){
+                  alert("Confirm Password is null");
+            }
+            
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8080/api/user/signup"); 
+
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            const body = JSON.stringify({
+                  type: document.getElementById("type").value,
+                  name: document.getElementById("name").value,
+                  age: document.getElementById("age").value,
+                  gender: 'male',
+                  city: document.getElementById("city").value,
+                  phone: document.getElementById("phone").value,
+                  email:document.getElementById("email").value,
+                  password: document.getElementById("password").value
+            });
+            xhr.onload = () => {
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                  window.location.replace("Login.html");
+                  } else {
+                  console.log(`Error: ${xhr.status}`);
+                  }
+            };
+            xhr.send(body); 
+
+
+}  
+      
+</script>
+
+
+<style>
+        body
+        {
+            background: white;
+            height: 500px;
+            width: auto;
+        }
+
+
+       .abc
+       {
+            display: flex;
+            justify-content: center;
+            margin-top: 70px;
+       }
+
+       .container
+       {
+       	position: relative;
+       	max-width: 500px;
+       	width: 90%;
+       	background: #87CEEB;
+       	padding: 25px;
+       	border-radius: 8px;
+       	box-shadow: 0 0 15px rgba(0,0,0,0.1);
+       }
+
+       .container header
+       {
+       	font-size: 1.2rem;
+       	color: #000;
+       	font-weight: 600;
+       	text-align: center;
+       }
+
+       .container .form
+       {
+       	margin-top: 15px;
+       }
+
+       .form .input-box
+       {
+       	width: 100%;
+       	margin-top: 10px;
+       }
+
+       .input-box label
+       {
+       	color: #000;
+       }
+
+       .form :where(.input-box input, .select-box)
+       {
+       	position: relative;
+       	height: 35px;
+       	width: 93%;
+       	outline: none;
+       	font-size: 1rem;
+       	color: #808080;
+       	margin-top: 5px;
+       	border:1px solid #ee4e34;
+       	border-radius: 6px;
+       	padding: 0 15px;
+       	background: #fcedda;
+       }
+
+       .input-box input:focus
+       {
+       	box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+       }
+
+       
+       .form .column
+       {
+       	display: flex;
+       	width: 100%;
+       	column-gap: 25px;
+       }
+
+       .form .gender-box
+       {
+       	margin-top: 10px;
+       }
+
+       .form :where(.gender-option, .gender)
+       {
+       	display: flex;
+       	align-items: center;
+       	column-gap: 50px;
+       	flex-wrap: wrap;
+       }
+
+       .form .gender
+       {
+            column-gap: 5px;
+       }
+
+       .gender input
+       {
+            accent-color: #ee4e34;
+       }
+
+       .form :where(.gender input, .gender label)
+       {
+            cursor: pointer;
+       }
+
+       .gender label
+       {
+            color: #000;
+       }
+
+       .city :where(input, .select-box)
+       {
+            margin-top: 10px;
+       }
+
+       .select-box select
+       {
+            height: 100%;
+            width: 100%;
+            outline:none;
+            border: none;
+            color: #808080;
+            font-size: 1rem;
+            background: #fcedda;
+       }
+
+       .container form .btn
+       {
+        margin-left: 50%;
+        transform: translateX(-40%);
+        transform: translateY(40%);
+        width: 120px;
+        height: 40px;
+        border: none;
+        outline: none;
+        background: #37369e;
+        cursor: pointer;
+        font-size: 16px;
+        text-transform: uppercase;
+        color: white;
+        border-radius: 4px;
+        transition: .3s;
+       }
+
+       .container form .btn:hover
+       {
+        opacity: .7;
+       }
+       
+
+
+</style>	
+
+</head>
+<body>
+      <div class="abc">
+     
+      <section class="container">
+      	<h1>Registration Form</h1>
+
+      	<form class="form" name='registration' onSubmit="return formValidation();">
+              
+            <div class="select-box">
+                  <select id="type">
+                        <option hidden="">Select User type</option>
+                        <option>Admin</option>
+                        <option>Doctor</option>
+                        <option>Patient</option>
+                  </select>
+            </div>
+
+      	  <div class="input-box" >
+      		<label>Name:</label>
+      		<input type="text" id="name" placeholder="Enter name">
+      	  </div>
+
+      	  <div class="column1">
+      	  	<div class="input-box">
+      	  	<label>Age:</label>
+      		<input type="number" id="age" placeholder="Enter age">	
+      	  </div>
+
+      	  <div class="gender-box">
+      	  <label>Gender:</label>
+      	  	<div class="gender-option">
+      	  		<div class="gender">
+      	  		<input name="gender" id="male" type="radio">
+      	  		<label for="check-male">Male</label>	
+      	  		</div>
+
+      	  		<div class="gender">
+      	  		<input name="gender" id="female" type="radio">
+      	  		<label for="check-female">Female</label>	
+      	  		</div>
+      	  	</div> 			
+      	  </div>
+
+          <div class="select-box">
+          <select id="city">
+          	<option hidden="">Select city</option>
+            <option>Sydney</option>
+            <option>Melbourne</option>
+            <option>Canberra</option>
+          </select>
+
+          </div>
+
+      	  <div class="column1">
+      	  	<div class="input-box">
+      	  	<label>Phone:</label>
+      		<input type="text" id="phone" placeholder="Enter phone number">	
+      	  </div>
+
+      	   <div class="column1">
+      	  	<div class="input-box">
+      	  	<label>Email:</label>
+      		<input type="email" id="email" placeholder="Enter email">	
+      	  </div>
+
+      	  <div class="column1">
+      	  	<div class="input-box">
+      	  	<label>Password:</label>
+      		<input type="password" id="password" placeholder="Enter password">	
+      	  </div>
+
+      	  <div class="column1">
+      	  	<div class="input-box">
+      	  	<label>Confirm Password:</label>
+      		<input type="password" id="password" placeholder="Confirm password">	
+      	  </div>
+
+    
+            <input type="button" class="btn" onClick="myFunction()" value="Register">
+          
+      	</form>
+      	
+       </section>
+  
+ </div>
+</body>
+</html>

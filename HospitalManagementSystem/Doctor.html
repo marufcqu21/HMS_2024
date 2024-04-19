@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Doctor</title>
+
+<script>
+function logout()
+{
+
+     		const xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8080/api/user/signout");
+
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            const body = JSON.stringify({       
+                  email: "email@gmail.com"
+            });
+            xhr.onload = () => {
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                      window.location.replace("Login.html");
+                  } else {
+                          alert("Logout failed");
+                  }
+            };
+            xhr.send(body); 
+}
+
+
+function getPrescription() {
+
+// Simulate an HTTP redirect:
+window.location.replace("Prescription.html");
+
+}
+
+
+function findAll() {
+
+            var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+    			if (this.readyState == 4 && this.status == 200) {
+       				
+       				var jsonResponse = JSON.parse(xhttp.responseText);
+       				console.log(jsonResponse.length);
+       				var table = document.createElement('table');
+        			table.setAttribute('id', 'customers');
+        			var properties = ['Appointment ID', 'Date', 'Time', 'PatientName','Action'];
+        			var capitalize = function(s) {
+         		 	   return s.charAt(0).toUpperCase() + s.slice(1);
+       	            }
+       	            var tr = document.createElement('tr');
+       				 for (var i = 0; i < properties.length; i++) {
+            				var th = document.createElement('th');
+           					th.appendChild(document.createTextNode(capitalize(properties[i])));
+            				tr.appendChild(th);
+        				}
+        			table.appendChild(tr);
+        			var tr, row;
+					for (var r = 0; r < jsonResponse.length; r++) {
+							tr = document.createElement('tr');
+   							row = jsonResponse[r];
+							console.log(row);
+							var td = document.createElement('td');
+						    td.appendChild(document.createTextNode(row["id"]));
+						    tr.appendChild(td);
+							var td2 = document.createElement('td');
+						    td2.appendChild(document.createTextNode(row["date"]));
+							tr.appendChild(td2)
+							var td3 = document.createElement('td');
+						    td3.appendChild(document.createTextNode(row["time"]));
+							tr.appendChild(td3)
+							var td4 = document.createElement('td');
+						    td4.appendChild(document.createTextNode(row["patientName"]));
+							tr.appendChild(td4)
+
+              var td5 = document.createElement('td');
+                td5.appendChild(document.createTextNode(row["Action"]));
+                td5.innerHTML = 
+                '<button onclick="editData(this)">Edit</button>'+ 
+                '<button onclick="deleteData(this)">Delete</button>';
+              tr.appendChild(td5)
+              
+                    		table.appendChild(tr);
+					}
+        			document.getElementById('doctorTable').appendChild(table);
+    			}  else {
+    				console.log("Loading failed!");
+    			}
+
+			};
+			xhttp.open("GET", "http://localhost:8080/api/doctor/appointment/all", true);
+			xhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xhttp.send();
+}
+
+window.onload =  findAll;
+
+function editData(button){
+  // Get the parent row of the clicked button 
+            let row = button.parentNode.parentNode; 
+            
+            // Get the cells within the row 
+            let idCell = row.cells[0]; 
+            let dateCell = row.cells[1]; 
+            let timeCell = row.cells[2]; 
+            let patientNameCell = row.cells[3]; 
+            
+            // Prompt the user to enter updated values 
+            let idInput = 
+                prompt("Enter the updated id:", 
+                    idCell.innerHTML); 
+            let dateInput = 
+                prompt("Enter the updated date:", 
+                    dateCell.innerHTML); 
+            let timeInput = 
+                prompt("Enter the updated time:", 
+                    timeCell.innerHTML 
+                ); 
+            let patientNameInput = 
+                prompt("Enter the updated Patient Name:", 
+                    patientNameCell.innerHTML 
+                ); 
+            
+            // Update the cell contents with the new values 
+            idCell.innerHTML = idInput; 
+            dateCell.innerHTML = dateInput; 
+            timeCell.innerHTML = timeInput; 
+            patientNameCell.innerHTML = patientNameInput; 
+        } 
+
+function deleteData(button){
+        
+        // Get the parent row of the clicked button 
+            let row = button.parentNode.parentNode; 
+  
+            // Remove the row from the table 
+            row.parentNode.removeChild(row); 
+}
+
+function clearInputs() { 
+            
+            // Clear input fields 
+            document.getElementById("idInput").value = ""; 
+            document.getElementById("dateInput").value = ""; 
+            document.getElementById("timeInput").value = ""; 
+            document.getElementById("patientNameInput").value = ""; 
+        } 
+
+
+</script>
+
+<style>
+	#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 60%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+</style>
+
+</head>
+<h1>Doctor View</h1>
+<body>
+
+ 
+
+<div id="doctorTable"></div>
+
+<button type="logout" id="logout" onclick="logout()">Logout</button>
+
+<a href="Prescription.html" target="_blank">+ADD New Patient</a>
+
+
+</body>
+</html>

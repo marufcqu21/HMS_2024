@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prescription</title>
+</head>
+
+<script>
+
+/*function Logout()
+{
+
+     		const xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8080/api/user/signout");
+
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            const body = JSON.stringify({       
+                  email: "email@gmail.com"
+            });
+            xhr.onload = () => {
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                      window.location.replace("Login.html");
+                  } else {
+                          alert("Logout failed");
+                  }
+            };
+            xhr.send(body); 
+}
+*/
+
+
+function addNew() {
+
+            var patientName = document.getElementById("pName").value;
+            console.log(patientName);
+            if (patientName.length === 0) {
+                  alert("Patient name is null");
+            }
+
+            var date = document.getElementById("date").value;
+            console.log(date);
+            if (date.length===0){
+                  alert("Date is null");
+            }
+
+            var time = document.getElementById("time").value;
+            console.log(time);
+            if (time.length===0){
+                  alert("Time is null");
+            }
+
+            var prescription = document.getElementById("prescription").value;
+            console.log(prescription);
+            if (prescription.length===0){
+                  alert("Prescription is null");
+            }
+            
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8080/api/patient/prescription"); 
+
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            console.log("Hello world!");
+            const body = JSON.stringify({
+                  
+                  patientName: document.getElementById("pName").value,
+                  date: document.getElementById("date").value,
+                  time: document.getElementById("time").value,
+                  prescription: document.getElementById("prescription").value
+                  
+            });
+
+            xhr.onload = () => {
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                  alert("Record added!");
+                  window.location.replace("Login.html");
+                  } else {
+                  console.log(`Error: ${xhr.status}`);
+                  }
+            };
+            xhr.send(body); 
+
+}
+
+</script>
+
+<style>
+	    body
+        {
+            background: white;
+            height: 500px;
+            width: auto;
+        } 
+
+      .container
+       {
+        position: relative;
+        max-width: 500px;
+        width: 80%;
+        background: #abdbe3;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+       }
+
+       .container header
+       {
+        font-size: 1.2rem;
+        color: #000;
+        font-weight: 400;
+        text-align: center;
+       }
+
+       .container .form
+       {
+        margin-top: 30px;
+       }
+
+       .form .input-box
+       {
+        width: 100%;
+        margin-top: 10px;
+       }
+
+       .input-box label
+       {
+        color: #000;
+       }
+
+       .form :where(.input-box input)
+       {
+        position: relative;
+        height: 35px;
+        width: 93%;
+        outline: none;
+        font-size: 1rem;
+        color: #808080;
+        margin-top: 5px;
+        border:1px solid #ee4e34;
+        border-radius: 6px;
+        padding: 0 15px;
+        background: white;
+       }
+
+       .input-box input:focus
+       {
+        box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+       }
+
+       
+       .form .column
+       {
+        display: flex;
+        width: 100%;
+        column-gap: 25px;
+       } 
+
+       .select-box select
+       {
+            height: 100%;
+            width: 100%;
+            outline:none;
+            border: none;
+            color: #808080;
+            font-size: 1rem;
+            background: #fcedda;
+       }
+
+       button
+       {
+            height: 60px;
+            width: 30%;
+            color: white;
+            font-size: 1rem;
+            font-weight: 400;
+            margin-top: 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #008CBA;
+       }
+
+       
+
+</style>
+
+<h1>Prescription</h1>
+<body>
+
+<div id="patientTable"></div>
+
+<section class="container">
+<form class="form">
+      <div class="column1">
+      	  <div class="input-box">
+      	  <label>Patient Name:</label>
+      		<input placeholder="Enter patient name" id="pName" type="text">	
+      	  </div>
+
+      <div class="column1">
+      	  	<div class="input-box">
+      	  	<label>Date:</label>
+      		<input placeholder="Enter date" id="date" type="Date">	
+      	  </div>
+
+      	
+      	  <div class="input-box" >
+      		<label>Time:</label>
+      		<input placeholder="Enter time" id="time" type="Time">
+      	  </div>
+
+      	   <div class="column1">
+      	  	<div class="input-box">
+      	  	<label>Prescription:</label>
+      		<input placeholder="Enter prescription" id="prescription" type="text">	
+      	  </div>
+
+
+
+<button type="add" id="add" onclick="addNew()">+ADD New</button>
+
+<a href="Doctor.html" target="_blank">Go Back</a> 
+
+</section>
+</body>
+</html>
